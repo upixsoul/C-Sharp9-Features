@@ -1,4 +1,6 @@
-﻿namespace C_Sharp9
+﻿using System;
+
+namespace C_Sharp9
 {
     //1.- Init-only Properties
     public class User
@@ -27,6 +29,11 @@
     {
         public override User GetById(string id) => new User { Id = id, Name = "Test" };
     }
+
+    public record Person(string Name, string Surname);
+    public record Student(string Name, string Surname, double Grade)
+        : Person(Name, Surname);
+
     internal class Program
     {
         static void Main(string[] args)
@@ -83,7 +90,44 @@
             Console.WriteLine();
             Console.WriteLine("6.- Covariant Return Types");
             Console.WriteLine("Allows a derived class to return a more specific type than the base class or interface.");
-            Console.WriteLine("Use Case: In backend development, this is useful for repository patterns where derived classes return specific entity types (e.g., User instead of object).\r\n\r\n");
+            Console.WriteLine("Use Case: In backend development, this is useful for repository patterns where derived classes return specific entity types (e.g., User instead of object).");
+            #endregion
+
+            #region ReversibleChanges
+            Console.WriteLine();
+            Console.WriteLine("7.- Reversible changes");
+            Console.WriteLine("You can use the with keyword to create record instances based on existing record instances. This feature allows you to change indicated property values by way of object initialization syntax");
+
+            var user4 = new User2("U004", "Twain");
+            var user5 = user4 with { Name = "Finn" };
+            Console.WriteLine($"User ID: {user4.Id}, Name: {user4.Name}");
+            Console.WriteLine($"User ID: {user5.Id}, Name: {user5.Name}");
+            #endregion
+
+            #region StaticLambdaExpressionsAndAnonymousFunctions
+            Console.WriteLine();
+            Console.WriteLine("8.- Static Lambda Expressions And Anonymous Functions");
+            Console.WriteLine("you can use static lambda expressions to enforce that no variables are captured.");
+            Console.WriteLine("This helps prevent unintended memory allocations and enforces better performance.");
+            Func<int, int> square = static y => y * y; // Static lambda expression
+            // List to store numbers
+            List<int> numbers = new List<int>() {36, 71, 12,
+                15, 29, 18, 27, 17, 9, 34};
+
+            Console.Write("The list : ");
+            foreach (var value in numbers)
+            {
+                Console.Write("{0} ", value);
+            }
+            Console.WriteLine();
+            var squareList = numbers.Select(x => square(x));
+
+            // foreach loop to display squares
+            Console.Write("Squares : ");
+            foreach (var value in squareList)
+            {
+                Console.Write("{0} ", value);
+            }
             #endregion
         }
 
