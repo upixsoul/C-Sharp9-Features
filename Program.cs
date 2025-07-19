@@ -1,23 +1,22 @@
-﻿using System;
-
+﻿
 namespace C_Sharp9
 {
-    //1.- Init-only Properties
+    //1. Init-only Properties
     public class User
     {
-        public string Id { get; init; }
-        public string Name { get; init; }
+        public string? Id { get; init; }
+        public string? Name { get; init; }
     }
 
-    //2.- Record Types
+    //2. Record Types
     public record User2(string Id, string Name);
 
-    //5.- Target-typed new Expressions
+    //5. Target-typed new Expressions
     public class UserService
     {
-        private readonly List<User> _users = new(); // No need for `new List<User>()`
+        public readonly List<User> Users = new(); // No need for `new List<User>()`
 
-        public void AddUser(User user) => _users.Add(user);
+        public void AddUser(User user) => Users.Add(user);
     }
 
     //6. Covariant Return Types
@@ -36,7 +35,7 @@ namespace C_Sharp9
 
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Hello, Welcome to DAGG C# 9 Catalog");
             Console.WriteLine("This catalog contains examples of C# 9.0 features");
@@ -144,7 +143,9 @@ namespace C_Sharp9
         public static string GetUserStatus(int loginAttempts) => loginAttempts switch
         {
             <= 0 => "Inactive",
+            // ReSharper disable once PatternIsRedundant
             > 0 and < 3 => "New User",
+            // ReSharper disable once PatternIsRedundant
             >= 3 and < 10 => "Active",
             _ => "Unknown"
         };
